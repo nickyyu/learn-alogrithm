@@ -1,6 +1,5 @@
 package org.nickyu;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 
 import static org.nickyu.MoneyUtil.numberToChina;
