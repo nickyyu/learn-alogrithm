@@ -29,13 +29,22 @@ public class StringUtilTest {
     }
 
     @Test
-    public void indexWithBMP() {
+    public void indexWithKMP() {
         String str = "11111111111122222222223sjsjsjskshkskshksksks";
         String subStr = "sks";
-        Assert.assertTrue(StringUtil.indexWithBMP(str,subStr) != -1);
+        Assert.assertTrue(StringUtil.indexWithKMP(str,subStr) != -1);
         subStr = "avsbsham";
-        Assert.assertTrue(StringUtil.indexWithBMP(str,subStr) == -1);
+        Assert.assertTrue(StringUtil.indexWithKMP(str,subStr) == -1);
         subStr = "sksa";
-        Assert.assertTrue(StringUtil.indexWithBMP(str,subStr) == -1);
+        Assert.assertTrue(StringUtil.indexWithKMP(str,subStr) == -1);
+    }
+
+
+    @Test
+    public void getMaxPatternPrefix(){
+        String patStr = "sksks";
+        char[] chars = patStr.toCharArray();
+        int index = StringUtil.getMaxPatternPrefix(chars,chars.length);
+        Assert.assertTrue(index == 2);
     }
 }

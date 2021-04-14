@@ -52,16 +52,17 @@ public class StringUtil {
     }
 
     /**
-     * 查找匹配字符串索引(BMP算法)
+     * 查找匹配字符串索引(KMP算法)
      * @param source 主串
      * @param subStr 待匹配串
      * @return
      */
-    public static int indexWithBMP(String source,String subStr){
+    public static int indexWithKMP(String source,String subStr){
         char[] sourceChar = source.toCharArray();
         char[] subChar = subStr.toCharArray();
         int subLength = subChar.length;
-        int[] next = getNexts(subChar);
+//        int[] next = getNexts(subChar);
+        int[] next = getNexts(subChar,subLength);
         int j = 0;
         for(int i = 0;i<sourceChar.length;i++){
             while (j>0 && sourceChar[i] != subChar[j]){
@@ -79,7 +80,12 @@ public class StringUtil {
 
     }
 
-    private static int[] getNexts(char subChar[]){
+    /**
+     * KMP失效函数计算方法
+     * @param subChar
+     * @return
+     */
+    public static int[] getNexts(char subChar[]){
         int length = subChar.length;
         int[] next = new int[length];
         next[0] = -1;
@@ -94,6 +100,41 @@ public class StringUtil {
             next[i] = k;
         }
         return next;
+    }
+
+
+    /**
+     *KMP失效函数计算方法（朴素算法）
+     * @param ch
+     * @param size
+     * @return
+     */
+    public static int[] getNexts(char ch[],int size){
+        int[] next = new int[size];
+        next[0] = -1;
+        for(int i = 1;i<size;i++){
+            next[i] = getMaxPatternPrefix(ch,i+1);
+        }
+        return next;
+    }
+
+    /**
+     * 获取最大匹配前缀子串结尾字符下标
+     * @param ch
+     * @param size
+     * @return
+     */
+    public static int getMaxPatternPrefix(char ch[],int size){
+        int i = 1,j = -1;
+        while(i < size && j < size){
+            if(ch[i] == ch[j+1]){
+                j++;
+            }else {
+                j = -1;
+            }
+            i++;
+        }
+        return j;
     }
 
 
